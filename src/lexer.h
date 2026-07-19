@@ -90,10 +90,4 @@ class Lexer {
          */
         void skipWhitespace();
 
-        /**
-         * @brief Constructs an END_OF_FILE token at the current line.
-         * @return A Token with type END_OF_FILE.
-         */
-        Token eofToken() const;
-
 };
