@@ -52,9 +52,6 @@ TEST_CASE("lexer tokenizes integer literals", "[lexer]")
     }
 
     SECTION("leading zeros are not collapsed") {
-        // Expected to FAIL — the lexer currently scans all digits without
-        // guarding against leading zeros. This documents the known behavior;
-        // fix will be added later.
         std::istringstream input("000");
         Lexer lexer(input);
 
