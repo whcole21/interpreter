@@ -148,18 +148,18 @@ Token Lexer::scanNumber()
     t.line_no = line_no;
 
     int ch = input.get();
-    if (ch == '0') {
-        t.lexeme = "0";
-        return t;
-    }
+    bool hasLeadingZero = ch == '0';
 
     while (std::isdigit(ch)) {
         t.lexeme += static_cast<char>(ch);
         ch = input.get();
     }
-
+    
     if (ch != EOF)
         input.unget();
+
+    if (hasLeadingZero)
+        t.lexeme = "0";
 
     return t;
 }
