@@ -29,7 +29,7 @@ Token Lexer::scanToken()
     int ch = input.peek();
 
     if (ch == EOF)
-        return eofToken();
+        return Token{TokenType::END_OF_FILE, "", line_no};
 
     if (std::isdigit(ch))
         return scanNumber();
@@ -148,13 +148,18 @@ Token Lexer::scanNumber()
     t.line_no = line_no;
 
     int ch = input.get();
+    bool hasLeadingZero = ch == '0';
+
     while (std::isdigit(ch)) {
         t.lexeme += static_cast<char>(ch);
         ch = input.get();
     }
-
+    
     if (ch != EOF)
         input.unget();
+
+    if (hasLeadingZero)
+        t.lexeme = "0";
 
     return t;
 }
@@ -210,11 +215,3 @@ void Lexer::skipWhitespace()
         input.unget();
 }
 
-
-Token Lexer::eofToken() const
-{
-    Token t;
-    t.type = TokenType::END_OF_FILE;
-    t.line_no = line_no;
-    return t;
-}
